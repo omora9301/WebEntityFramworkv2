@@ -1,0 +1,73 @@
+﻿@model List<DatLibreria.EntityFramework.Libros>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Registros Librería</h2>
+@if (TempData["resu"] != null)
+{
+    <h5 class="alert alert-success">@TempData["resu"]</h5>
+}@if (TempData["error"] != null)
+{
+    <h5 class="alert alert-warning">@TempData["error"]</h5>
+}
+<p>
+    @Html.ActionLink("Agregar", "Create", null, new { @class = "btn btn-outline-success" })
+</p>
+@using (@Html.BeginForm())
+{
+    @Html.TextBox("valor")
+    <input type="submit" value="buscar" formaction="/Home/BuscarRegistro" />
+}
+<br />
+<table class="table" style="font-size:13px">
+    <tr class="btn-outline-warning">
+        <th>Titulo</th>
+        <th>
+            Autor
+        </th>
+        <th>
+            Editorial
+        </th>
+        <th>
+            Edicion
+        </th>
+        <th>
+            ISBN
+        </th>
+        <th>
+            Categoria
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr title="@item.Id">
+            <td>
+                @item.Titulo
+            </td>
+            <td>
+                @item.Autor
+            </td>
+            <td>
+                @item.Editorial
+            </td>
+            <td>
+                @item.Edicion
+            </td>
+            <td>
+                @item.ISBN
+            </td>
+            <td>
+                @item.Categorias.NombreC
+            </td>
+            <td>
+                @Html.ActionLink("Editar", "Edit", new { id = item.Id }, new { @class = "btn btn-outline-warning" })
+                <a href="/Home/Delete/@item.Id" onclick="return confirm('Eliminar Registro?')" class="btn btn-outline-danger">Eliminar</a>
+            </td>
+        </tr>
+    }
+
+</table>
